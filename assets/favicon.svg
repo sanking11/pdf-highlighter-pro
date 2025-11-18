@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b00;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ff9933;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffcc00;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffff00;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#ffcc00;stop-opacity:0.8" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Dark background circle -->
+  <circle cx="32" cy="32" r="30" fill="#1a0a00" opacity="0.9"/>
+  
+  <!-- Outer glow ring -->
+  <circle cx="32" cy="32" r="28" fill="none" stroke="url(#bgGrad)" stroke-width="2" opacity="0.5"/>
+  
+  <!-- PDF document shape -->
+  <path d="M 20 16 L 38 16 L 44 22 L 44 48 L 20 48 Z" fill="url(#bgGrad)" filter="url(#glow)"/>
+  <path d="M 38 16 L 38 22 L 44 22" fill="none" stroke="#1a0a00" stroke-width="1.5"/>
+  
+  <!-- Highlight marker on document -->
+  <rect x="24" y="28" width="16" height="3" fill="url(#highlightGrad)" opacity="0.9" rx="1"/>
+  <rect x="24" y="34" width="12" height="3" fill="url(#highlightGrad)" opacity="0.7" rx="1"/>
+  <rect x="24" y="40" width="14" height="3" fill="url(#highlightGrad)" opacity="0.8" rx="1"/>
+  
+  <!-- Futuristic accent lines -->
+  <line x1="12" y1="32" x2="18" y2="32" stroke="#ff9933" stroke-width="1.5" opacity="0.6"/>
+  <line x1="46" y1="32" x2="52" y2="32" stroke="#ff9933" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="12" cy="32" r="1.5" fill="#ffcc00" opacity="0.8"/>
+  <circle cx="52" cy="32" r="1.5" fill="#ffcc00" opacity="0.8"/>
+</svg>
