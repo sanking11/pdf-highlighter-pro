@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <!--  <meta http-equiv="X-Frame-Options" content="DENY"> -->
+   
     <meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
 
     
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="alternate icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="alternate icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
 
     <title>PDF Bulk Highlighter Pro - D&H Steel Construction</title>
@@ -79,7 +81,7 @@
             <div class="upload-options">
     <div class="upload-option">
         <label for="pdfFiles" class="upload-label" title="Upload PDF files" aria-label="Upload PDF files">
-            <img src="/assets/pdf-icon.png" alt="PDF Upload" class="upload-icon bounce-icon">
+            <img src="assets/pdf-icon.png" alt="PDF Upload" class="upload-icon bounce-icon">
             <span>Drag & Drop PDF Files Here</span>
             <p style="text-align: left; color: #bbbbbb; font-size: 12px; margin-top: 5px;" > or click to browse (Multiple files supported)</p>
             <input type="file" id="pdfFiles" accept=".pdf" multiple aria-label="Upload PDF files">
@@ -115,7 +117,7 @@
         <!-- Statistics Dashboard Card -->
         <div class="glass-card" id="dashboardCard" style="display: none;">
             <h2>
-    <img src="/assets/report.png" alt="Dashboard" style="width: 35px; height: 35px;  margin-right: 10px;">
+    <img src="assets/report.png" alt="Dashboard" style="width: 35px; height: 35px;  margin-right: 10px;">
     Processing Summary
             </h2>
             <div class="dashboard-grid" id="dashboardContent">
@@ -136,10 +138,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
     <br><br>
-    
     <!-- Footer -->
     <footer class="footer-card">
       Designed and Developed by 
