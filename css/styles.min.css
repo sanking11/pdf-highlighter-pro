@@ -388,6 +388,7 @@
         }
 
         .btn-cancel {
+            margin-top: Auto; margin-bottom: 4px;
             padding: 14px 32px;
             border: none;
             border-radius: 12px;
@@ -1280,3 +1281,4 @@ main {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
 }
+
