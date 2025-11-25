@@ -3927,10 +3927,10 @@ async function getAIResponse(message) {
 // Get response from AI API via local server
 async function getAIAPIResponse(message) {
     try {
-        console.log('🤖 Calling local AI server...');
+        console.log('🤖 Calling AI server...');
 
-        // Call local Node.js server which proxies to OpenAI
-        const response = await fetch('http://localhost:3000/api/chat', {
+        // Call Vercel-hosted Node.js server which proxies to Groq API
+        const response = await fetch('https://pdf-highlighter-pro.vercel.app/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
