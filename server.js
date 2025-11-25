@@ -9,19 +9,27 @@ const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+// Middleware - Allow CORS from specific origins
+app.use(cors({
+    origin: [
+        'https://pdfhighlighter.app',
+        'https://sanking11.github.io',
+        'https://pdf-highlighter-pro.vercel.app',
+        'http://localhost:3000'
+    ],
+    methods: ['POST', 'GET', 'OPTIONS'],
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.static('.')); // Serve static files from current directory
 
 // Groq API Key from environment variable
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
-// Validate API key exists
+// Validate API key exists (but don't exit on Vercel, just log warning)
 if (!GROQ_API_KEY) {
-    console.error('❌ ERROR: GROQ_API_KEY not found in environment variables!');
-    console.error('💡 Create a .env file with: GROQ_API_KEY=your_api_key');
-    process.exit(1);
+    console.error('❌ WARNING: GROQ_API_KEY not found in environment variables!');
+    console.error('💡 Set GROQ_API_KEY in Vercel environment variables');
 }
 
 // API endpoint to proxy AI requests
@@ -31,9 +39,15 @@ app.post('/api/chat', async (req, res) => {
 
         console.log('📨 Received message:', message);
 
-        // Use Groq API with Llama 3.1
+        // Check if API key is available
+        if (!GROQ_API_KEY) {
+            console.error('❌ GROQ_API_KEY not configured');
+            return res.json({ response: null });
+        }
+
+        // Use Groq API with Llama 3.3
         try {
-            console.log('🤖 Calling Groq API (Llama 3.1)...');
+            console.log('🤖 Calling Groq API (Llama 3.3)...');
 
             const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                 method: 'POST',
