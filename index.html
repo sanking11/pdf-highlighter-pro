@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+   
+    <meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
+
+    
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="alternate icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="alternate icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+
+    <title>PDF Bulk Highlighter Pro - D&H Steel Construction</title>
+    
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <h2 class="neon-text">D&H Steel</h2>
+                    <h2 class="neon-text">Construction</h2>
+                    <h3 class="neon-text logo-tagline">---- Since 1972 ----</h3>
+                </div>
+                <div class="title-section">
+                    <h1>PDF Bulk Highlighter Pro</h1>
+                    <p class="subtitle">Powered by AI and precision engineering, PDF Bulk Highlighter Pro streamlines drawing reviews for architects and engineers. Detect, highlight, and organize key details instantly — and save hours of manual markup time so that you can focus on the design decisions that matter most.</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="glass-card">
+            <h2>Step 1: Define Highlighting Rules</h2>
+            <div class="rules-section">
+                <div class="rule-input-group">
+                    <div style="display: flex; flex-direction: column; gap: 12px; flex: 2; min-width: 200px;">
+        <label for="wordInput" style="color: #ffa64d; font-size: 1em; font-weight: 500; margin-bottom: -3px;"> 🔍  Search Text</label>
+        <input type="text" id="wordInput" placeholder="Enter word or phrase to highlight">
+    </div>
+    
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+        <label for="colorInput" style="color: #ffa64d; font-size: 1em; font-weight: 500; margin-bottom: -3px;"> 🎨  Color</label>
+        <input type="color" id="colorInput" value="#ffff00">
+    </div>
+    
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 110px;">
+        <label for="opacityInput" style="color: #ffa64d; font-size: 1em; font-weight: 500; margin-bottom: -3px;">💡 Opacity</label>
+        <input type="number" id="opacityInput" min="0" max="1" step="0.1" value="0.3" placeholder="Opacity">
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; justify-content: flex-end;">
+        <button class="btn-add" id="addRuleBtn">Add Rule</button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; justify-content: flex-end; margin-bottom: -3px;">
+        <button class="btn-cancel" id="cancelEditBtn" style="display: none;">Cancel</button>
+    </div>
+</div>
+
+<!-- Advanced Options Toggle Button -->
+<div style="margin-top: 20px; margin-bottom: 10px;">
+    <button type="button" class="btn-advanced-toggle" id="advancedOptionsToggle" style="background: linear-gradient(135deg, #ff6b00, #ff9933); color: white; border: none; padding: 3px 15px; border-radius: 8px; cursor: pointer; font-size: 9px; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);">
+        <span id="advancedToggleIcon">▶</span> Advance Options
+    </button>
+</div>
+
+<!-- Advanced Options Container (Hidden by default) -->
+<div id="advancedOptionsContainer" style="display: none; gap: 25px; flex-wrap: wrap; margin-top: 15px; margin-bottom: 15px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid rgba(255, 166, 77, 0.2);">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <label class="toggle-switch">
+            <input type="checkbox" id="exactMatchInput">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">🎯 Exact Match</span>
+        </label>
+        <span class="info-icon" data-tooltip-type="exact-match">ⓘ</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <label class="toggle-switch">
+            <input type="checkbox" id="caseSensitiveInput">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">🔠 Case Sensitive</span>
+        </label>
+        <span class="info-icon" data-tooltip-type="case-sensitive">ⓘ</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <label class="toggle-switch">
+            <input type="checkbox" id="useOCRInput">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">📃 Use OCR</span>
+        </label>
+        <span class="info-icon" data-tooltip-type="use-ocr">ⓘ</span>
+        
+    </div>
+</div>
+
+<!-- Single shared tooltip popup -->
+<div class="tooltip-popup" id="shared-tooltip">
+    <div class="tooltip-header">
+        <span id="tooltip-header"></span>
+        <span class="tooltip-close" id="tooltip-close">✕</span>
+    </div>
+    <div class="tooltip-content" id="tooltip-content"></div>
+</div>
+
+<br> <!-- do not remove this -->
+
+                <div id="rulesList" class="rules-list"></div>
+                <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-export" id="exportRulesBtn" style="display: none;" >
+                            📤 Export Rules
+                        </button>
+                        <label for="importRulesFile" class="btn-import" id="importRulesBtn">
+                            📥 Import Rules <p style="text-align: center; color: #999; font-size: 10px;">Advance users only (JSON file required)</p>
+                            <input type="file" id="importRulesFile" accept=".json" style="display: none;">
+                        </label>
+                    </div>
+                    
+                    <button class="btn-clear-all" id="clearAllBtn" style="display: none;">Clear All Rules</button>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Step 2: Upload PDF Files</h2> <p style="text-align: left; color: #999; font-size: 12px;">
+  The application performs all operations client-side locally and does not transmit, log, or store any user files or metadata externally. Upon task completion, all in-memory data is immediately discarded.
+</p><br>
+
+            <div class="upload-options">
+    <div class="upload-option">
+        <label for="pdfFiles" class="upload-label" title="Upload PDF files" aria-label="Upload PDF files">
+            <img src="assets/pdf-icon.png" alt="PDF Upload" class="upload-icon bounce-icon">
+            <span>Drag & Drop PDF Files Here</span>
+            <p style="text-align: left; color: #bbbbbb; font-size: 12px; margin-top: 5px;" > or click to browse (Multiple files supported)</p>
+            <input type="file" id="pdfFiles" accept=".pdf" multiple aria-label="Upload PDF files">
+        </label>
+    </div>
+    <div class="upload-option">
+        <label for="zipFile" class="upload-label" title="Upload ZIP file containing PDFs" aria-label="Upload ZIP file">
+            <img src="assets/zip-icon.png" alt="ZIP Upload" class="upload-icon bounce-icon">
+            <span>Drag & Drop ZIP Folder</span>
+            <p style="text-align: left; color: #bbbbbb; font-size: 12px; margin-top: 5px;"> or click to browse (Only ZIP folder with PDFs are supported)</p>
+            <input type="file" id="zipFile" accept=".zip" aria-label="Upload ZIP file">
+        </label>
+    </div>
+</div>
+                <div id="filesList" class="files-list"></div>
+                <div style="margin-top: 30px; text-align: right;">
+    <button class="btn-clear-files" id="clearAllFilesBtn" style="display: none;">Clear All Files</button>
+</div>
+            </div>
+        
+
+        <div class="glass-card" id="progressCard" style="display: none;">
+            <h2>Step 3: Processing Files</h2>
+             <p style="text-align: left; color: #999; font-size: 12px;">
+ Real-time processing logs are provided for transparency and operate under strict privacy controls with a zero-retention policy (Performs all oprations client-side locally).<br>
+ Only file-count metric is calculated for fair-usage enforcement; All logs are ephemeral and automatically discarded once processing is complete.
+</p>
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p id="progressText" class="progress-text">0 / 0 files processed</p>
+                <div id="processingLog" class="processing-log"></div>
+            </div>
+        </div>
+
+        <!-- Statistics Dashboard Card -->
+        <div class="glass-card" id="dashboardCard" style="display: none;">
+            <h2>
+    <img src="assets/report.png" alt="Dashboard" style="width: 35px; height: 35px;  margin-right: 10px;">
+    Processing Summary
+            </h2>
+            <div class="dashboard-grid" id="dashboardContent">
+                <!-- Dashboard stats will be inserted here by JavaScript -->
+            </div>
+         </div>
+
+        <div class="action-buttons">
+            <button class="btn-primary" id="processBtn" disabled>
+                Process Files
+            </button>
+            <button class="btn-secondary" id="downloadBtn" disabled>
+                📥 Download Highlighted PDFs
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+
+
+    <br><br>
+    <!-- Footer -->
+    <footer class="footer-card">
+      Designed and Developed by 
+      <span class="neon-text">SUNNY</span> 
+      with lots of love ❤️ coffee ☕ and AI 👽
+    </footer>
+
+    <!-- Footer CSS -->
+    
+
+
+<canvas id="particleCanvas"></canvas>
+
+<!-- AI Chatbot -->
+<div class="chatbot-container" id="chatbotContainer">
+    <div class="chatbot-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="aurora-icon">🤖</span>
+            <div>
+                <div class="chatbot-title">Aurora AI</div>
+                <div class="chatbot-status">Online</div>
+            </div>
+        </div>
+        <button class="chatbot-minimize" id="chatbotMinimize">−</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+        <div class="message bot-message">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <div class="message-text">Hi! I'm Aurora AI, your intelligent assistant. Ask me anything!
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="chatbot-input-container">
+        
+        <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask me anything...">
+        
+        <button class="chatbot-send" id="chatbotSend">
+            <span>➤</span>
+        </button>
+    </div>
+</div>
+
+<!-- Chatbot Toggle Button -->
+<button class="chatbot-toggle" id="chatbotToggle">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <span class="chatbot-toggle-icon">🤖</span>
+       
+    <span class="chatbot-badge" id="chatbotBadge">1</span>
+    </div>
+</button>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

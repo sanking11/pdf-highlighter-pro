@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
+
+    
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="alternate icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="alternate icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+
+    <title>PDF Bulk Highlighter Pro - D&H Steel Construction</title>
+    
+    <link rel="stylesheet" href="css/styles.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <h2 class="neon-text">D&H Steel</h2>
+                    <h2 class="neon-text">Construction</h2>
+                    <h3 class="neon-text logo-tagline">---- Since 1972 ----</h3>
+                </div>
+                <div class="title-section">
+                    <h1>PDF Bulk Highlighter Pro</h1>
+                    <p class="subtitle">Powered by AI and precision engineering, PDF Bulk Highlighter Pro streamlines drawing reviews for architects and engineers. Detect, highlight, and organize key details instantly — and save hours of manual markup time so that you can focus on the design decisions that matter most.</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="glass-card">
+            <h2>Step 1: Define Highlighting Rules</h2>
+            <div class="rules-section">
+                <div class="rule-input-group">
+                    <div style="display: flex; flex-direction: column; gap: 12px; flex: 2; min-width: 200px;">
+        <label for="wordInput" style="color: #ffa64d; font-size: 1em; font-weight: 500; margin-bottom: -3px;"> 🔍  Search Text</label>
+        <input type="text" id="wordInput" placeholder="Enter word or phrase to highlight">
+    </div>
+    
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+        <label for="colorInput" style="color: #ffa64d; font-size: 1em; font-weight: 500; margin-bottom: -3px;"> 🎨  Color</label>
+        <input type="color" id="colorInput" value="#ffff00">
+    </div>
+    
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 110px;">
+        <label for="opacityInput" style="color: #ffa64d; font-size: 1em; font-weight: 500; margin-bottom: -3px;">💡 Opacity</label>
+        <input type="number" id="opacityInput" min="0" max="1" step="0.1" value="0.3" placeholder="Opacity">
+    </div>
+    
+    <label style="display: flex; align-items: center; gap: 12px; color: #ffa64d; cursor: pointer; margin-top: 25px;">
+        <input type="checkbox" id="exactMatchInput" style="width: 20px; height: 20px; cursor: pointer;">
+        <span>Exact Match</span>
+    </label>
+    
+    <button class="btn-add" id="addRuleBtn" style="margin-top: Auto; margin-bottom: 4px;">Add Rule</button>
+
+                    <button class="btn-cancel" id="cancelEditBtn" style="display: none;">Cancel</button>
+                </div>
+                <div id="rulesList" class="rules-list"></div>
+                <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-export" id="exportRulesBtn" style="display: none;" >
+                            📤 Export Rules
+                        </button>
+                        <label for="importRulesFile" class="btn-import" id="importRulesBtn">
+                            📥 Import Rules <p style="text-align: center; color: #999; font-size: 10px;">Advance users only (JSON file required)</p>
+                            <input type="file" id="importRulesFile" accept=".json" style="display: none;">
+                        </label>
+                    </div>
+                    
+                    <button class="btn-clear-all" id="clearAllBtn" style="display: none;">Clear All Rules</button>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Step 2: Upload PDF Files</h2> <p style="text-align: left; color: #999; font-size: 12px;">
+  The application performs all operations client-side locally and does not transmit, log, or store any user files or metadata externally. Upon task completion, all in-memory data is immediately discarded.
+</p><br>
+
+            <div class="upload-options">
+    <div class="upload-option">
+        <label for="pdfFiles" class="upload-label" title="Upload PDF files" aria-label="Upload PDF files">
+            <img src="assets/pdf-icon.png" alt="PDF Upload" class="upload-icon bounce-icon">
+            <span>Drag & Drop PDF Files Here</span>
+            <p style="text-align: left; color: #bbbbbb; font-size: 12px; margin-top: 5px;" > or click to browse (Multiple files supported)</p>
+            <input type="file" id="pdfFiles" accept=".pdf" multiple aria-label="Upload PDF files">
+        </label>
+    </div>
+    <div class="upload-option">
+        <label for="zipFile" class="upload-label" title="Upload ZIP file containing PDFs" aria-label="Upload ZIP file">
+            <img src="assets/zip-icon.png" alt="ZIP Upload" class="upload-icon bounce-icon">
+            <span>Drag & Drop ZIP Folder</span>
+            <p style="text-align: left; color: #bbbbbb; font-size: 12px; margin-top: 5px;"> or click to browse (Only ZIP folder with PDFs are supported)</p>
+            <input type="file" id="zipFile" accept=".zip" aria-label="Upload ZIP file">
+        </label>
+    </div>
+</div>
+                <div id="filesList" class="files-list"></div>
+                <div style="margin-top: 30px; text-align: right;">
+    <button class="btn-clear-files" id="clearAllFilesBtn" style="display: none;">Clear All Files</button>
+</div>
+            </div>
+        
+
+        <div class="glass-card" id="progressCard" style="display: none;">
+            <h2>Step 3: Processing Files</h2>
+             <p style="text-align: left; color: #999; font-size: 12px;">
+ Real-time processing logs are provided for transparency and operate under strict privacy controls with a zero-retention policy (Performs all oprations client-side locally).<br>
+ Only file-count metric is calculated for fair-usage enforcement; All logs are ephemeral and automatically discarded once processing is complete.
+</p>
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p id="progressText" class="progress-text">0 / 0 files processed</p>
+                <div id="processingLog" class="processing-log"></div>
+            </div>
+        </div>
+
+        <!-- Statistics Dashboard Card -->
+        <div class="glass-card" id="dashboardCard" style="display: none;">
+            <h2>
+    <img src="assets/report.png" alt="Dashboard" style="width: 35px; height: 35px;  margin-right: 10px;">
+    Processing Summary
+            </h2>
+            <div class="dashboard-grid" id="dashboardContent">
+                <!-- Dashboard stats will be inserted here by JavaScript -->
+            </div>
+         </div>
+
+        <div class="action-buttons">
+            <button class="btn-primary" id="processBtn" disabled>
+                Process Files
+            </button>
+            <button class="btn-secondary" id="downloadBtn" disabled>
+                📥 Download Highlighted PDFs
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+
+
+    <br><br>
+    <!-- Footer -->
+    <footer class="footer-card">
+      Designed and Developed by 
+      <span class="neon-text">SUNNY</span> 
+      with lots of love ❤️ coffee ☕ and AI 👽
+    </footer>
+
+    <!-- Footer CSS -->
+    
+
+
+<canvas id="particleCanvas"></canvas>
+
+    <script src="js/app.min.js"></script>
+</body>
+</html>
